@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e -x
+set -x
 
 # Install a system package required by our library
 yum install -y boost-devel
@@ -10,6 +10,9 @@ git clone https://github.com/borglab/gtsam.git
 
 ORIGPATH=$PATH
 
+PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by-interpreter
+touch ${PYTHON_LIBRARY}
+
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/requirements.txt
@@ -19,7 +22,34 @@ for PYBIN in /opt/python/*/bin; do
     cd $BUILDDIR
     export PATH=$PYBIN:$ORIGPATH
     "${PYBIN}/pip" install cmake
-    cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=RelWithDebInfo -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON -DGTSAM_USE_QUATERNIONS=OFF -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON -DGTSAM_PYTHON_VERSION=3 -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install
+
+    PYTHON_EXECUTABLE=${PYBIN}/python
+    PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
+
+    echo ""
+    echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
+    echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
+    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
+    
+    cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
+        -DGTSAM_USE_QUATERNIONS=OFF \
+        -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
+        -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON \
+        -DGTSAM_PYTHON_VERSION=Default \
+        -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
+        -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
+        -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
+        -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
+        -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}; ec=$?
+
+    if [ $ec -ne 0 ]; then
+        echo "Error:"
+        cat ./CMakeCache.txt
+        exit $ec
+    fi
+    set -e -x
+    
     make -j3 install
     cd $BUILDDIR/../gtsam_install/cythonRelWithDebInfo
     
