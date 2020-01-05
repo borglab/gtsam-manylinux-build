@@ -6,7 +6,7 @@ yum install -y boost-devel
 
 CURRDIR=$(pwd)
 
-git clone https://github.com/borglab/gtsam.git
+git clone https://github.com/ProfFan/gtsam.git -b feature/python_packaging
 
 ORIGPATH=$PATH
 
@@ -50,10 +50,10 @@ for PYBIN in /opt/python/*/bin; do
     fi
     set -e -x
     
-    make -j3 install
+    make -j$(nproc) install
     cd $BUILDDIR/../gtsam_install/cythonRelWithDebInfo
     
-    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
+    "${PYBIN}/pip" wheel . -w /io/wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
