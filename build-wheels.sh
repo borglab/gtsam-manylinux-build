@@ -14,9 +14,12 @@ PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by
 touch ${PYTHON_LIBRARY}
 
 # FIX auditwheel
+# https://github.com/pypa/auditwheel/issues/136
 cd /opt/_internal/cpython-3.7.5/lib/python3.7/site-packages/auditwheel/
 patch -p2 < /io/auditwheel.txt
 cd $CURRDIR
+
+mkdir -p /io/wheelhouse
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
@@ -58,7 +61,9 @@ for PYBIN in /opt/python/*/bin; do
     make -j$(nproc) install
     cd $BUILDDIR/../gtsam_install/cythonRelWithDebInfo
     
-    "${PYBIN}/pip" wheel . -w /io/wheelhouse/
+    # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
+    "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
+    cp ./dist/*.whl /io/wheelhouse
 done
 
 # Bundle external shared libraries into the wheels
