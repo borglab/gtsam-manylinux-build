@@ -13,6 +13,11 @@ ORIGPATH=$PATH
 PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by-interpreter
 touch ${PYTHON_LIBRARY}
 
+# FIX auditwheel
+cd /opt/_internal/cpython-3.7.5/lib/python3.7/site-packages/auditwheel/
+patch -p2 < /io/auditwheel.txt
+cd $CURRDIR
+
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/requirements.txt
@@ -40,7 +45,7 @@ for PYBIN in /opt/python/*/bin; do
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
         -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
-        -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
+        -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
         -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}; ec=$?
 
     if [ $ec -ne 0 ]; then
@@ -57,12 +62,12 @@ for PYBIN in /opt/python/*/bin; do
 done
 
 # Bundle external shared libraries into the wheels
-for whl in wheelhouse/*.whl; do
+for whl in /io/wheelhouse/*.whl; do
     auditwheel repair "$whl" --plat $PLAT -w /io/wheelhouse/
 done
 
 # Install packages and test
-for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
-    (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
-done
+# for PYBIN in /opt/python/*/bin/; do
+#     "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
+#     (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
+# done
