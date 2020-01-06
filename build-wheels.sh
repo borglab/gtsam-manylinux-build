@@ -21,6 +21,9 @@ cd $CURRDIR
 
 mkdir -p /io/wheelhouse
 
+# TODO: Build BOOST
+# https://thomastrapp.com/blog/building-a-pypi-package-for-a-modern-cpp-project/
+
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/requirements.txt
