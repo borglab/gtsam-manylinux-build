@@ -2,9 +2,20 @@
 set -x
 
 # Install a system package required by our library
-yum install -y boost-devel
+yum install -y wget libicu libicu-devel
 
 CURRDIR=$(pwd)
+
+# Build Boost staticly
+mkdir -p boost_build
+cd boost_build
+wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
+tar xzf boost_1_65_1.tar.gz
+cd boost_1_65_1
+./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex
+./b2 -j$(nproc) cxxflags="-fPIC" runtime-link=static variant=release link=static install
+
+cd $CURRDIR
 
 git clone https://github.com/ProfFan/gtsam.git -b feature/python_packaging
 
@@ -50,6 +61,10 @@ for PYBIN in /opt/python/*/bin; do
         -DGTSAM_PYTHON_VERSION=Default \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
+        -DBoost_USE_STATIC_LIBS=ON \
+        -DBOOST_ROOT=/usr/local \
+        -DBoost_NO_SYSTEM_PATHS=ON \
+        -DBUILD_STATIC_METIS=ON \
         -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
         -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}; ec=$?
