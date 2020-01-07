@@ -78,7 +78,7 @@ for PYBIN in /opt/python/*/bin; do
     set -e -x
     
     make -j$(nproc) install
-    cd $BUILDDIR/../gtsam_install/cythonRelWithDebInfo
+    cd $BUILDDIR/../gtsam_install/cython
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
