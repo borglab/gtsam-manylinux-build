@@ -1,5 +1,7 @@
 # GTSAM Python Wheel Builder
 
+![CI](https://github.com/ProfFan/gtsam-manylinux-build/workflows/CI/badge.svg)
+
 ## How to Build
 
 ```bash
