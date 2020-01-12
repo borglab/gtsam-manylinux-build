@@ -32,11 +32,10 @@ cd $CURRDIR
 
 mkdir -p /io/wheelhouse
 
-# TODO: Build BOOST
-# https://thomastrapp.com/blog/building-a-pypi-package-for-a-modern-cpp-project/
+declare -a PYTHON_VERS=( $1 )
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
+for PYBIN in ${PYTHON_VERS[@]}; do
     "${PYBIN}/pip" install -r /io/requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
