@@ -35,7 +35,8 @@ mkdir -p /io/wheelhouse
 declare -a PYTHON_VERS=( $1 )
 
 # Compile wheels
-for PYBIN in ${PYTHON_VERS[@]}; do
+for PYVER in ${PYTHON_VERS[@]}; do
+    PYBIN="/opt/python/$PYVER/bin"
     "${PYBIN}/pip" install -r /io/requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
