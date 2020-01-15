@@ -88,6 +88,12 @@ done
 # Bundle external shared libraries into the wheels
 for whl in /io/wheelhouse/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/
+    rm $whl
+done
+
+for whl in /io/wheelhouse/*.whl; do
+    new_filename=$(echo $whl | sed "s#\.none-manylinux2014_x86_64\.#.#g")
+    mv $whl $new_filename
 done
 
 # Install packages and test
