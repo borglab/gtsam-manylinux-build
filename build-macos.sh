@@ -36,13 +36,13 @@ for PYVER in ${PYTHON_VERS[@]}; do
     export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
     "${PYBIN}/pip3" install cmake
 
-    PYTHON_EXECUTABLE=${PYBIN}/python
-    PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
+    #PYTHON_EXECUTABLE=${PYBIN}/python
+    #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
-    echo ""
-    echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
-    echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
-    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
+    # echo ""
+    # echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
+    # echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
+    # echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
     
     cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
@@ -50,17 +50,18 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON \
         -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
-        -DGTSAM_PYTHON_VERSION=Default \
+        -DGTSAM_PYTHON_VERSION=3 \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=/usr/local \
         -DBoost_NO_SYSTEM_PATHS=ON \
-        -DBUILD_STATIC_METIS=ON \
-        -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
-        -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
-        -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
-        -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}; ec=$?
+        -DBUILD_STATIC_METIS=ON
+        # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
+        # -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
+        # -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
+        # -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+    ec=$?
 
     if [ $ec -ne 0 ]; then
         echo "Error:"
