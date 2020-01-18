@@ -49,6 +49,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_USE_QUATERNIONS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON \
+        -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
         -DGTSAM_PYTHON_VERSION=Default \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
