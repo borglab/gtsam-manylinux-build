@@ -30,7 +30,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="/usr/local/opt/$PYVER/bin"
     "${PYBIN}/pip3" install -r ./requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
-    BUILDDIR="./gtsam_$PYTHONVER/gtsam_build"
+    BUILDDIR="$CURRDIR/gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
@@ -52,7 +52,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
         -DGTSAM_PYTHON_VERSION=3 \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
-        -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
+        -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=/usr/local \
         -DBoost_NO_SYSTEM_PATHS=ON \
