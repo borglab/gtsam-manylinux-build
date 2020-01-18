@@ -12,7 +12,7 @@ wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
 tar xzf boost_1_65_1.tar.gz
 cd boost_1_65_1
 ./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex
-./b2 -j$(nproc) cxxflags="-fPIC" runtime-link=static variant=release link=static install
+./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
 cd $CURRDIR
 
@@ -68,7 +68,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     fi
     set -e -x
     
-    make -j$(nproc) install
+    make -j$(sysctl -n hw.logicalcpu) install
     cd $BUILDDIR/../gtsam_install/cython
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
