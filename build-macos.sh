@@ -33,7 +33,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     BUILDDIR="./gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
-    export PATH=$PYBIN:$ORIGPATH
+    export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
     "${PYBIN}/pip3" install cmake
 
     PYTHON_EXECUTABLE=${PYBIN}/python
