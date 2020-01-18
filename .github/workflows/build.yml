@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Python Build
+    name: Linux Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,3 +20,20 @@ jobs:
       with:
         name: gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
         path: wheelhouse/gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+  mac-build:
+    name: macOS Build
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        pyversion: ["python"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Build the macOS wheels
+      run: |
+        ./build-macos.sh ${{ matrix.pyversion }}
+    - name: Archive wheels
+      uses: actions/upload-artifact@v1
+      with:
+        name: wheels
+        path: ./wheelhouse
