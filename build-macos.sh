@@ -74,7 +74,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     cd $BUILDDIR/../gtsam_install/cython
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
-    "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
+    "${PYBIN}/python3" setup.py bdist_wheel
     cp ./dist/*.whl ./wheelhouse
 done
 
