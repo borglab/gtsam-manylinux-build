@@ -15,6 +15,7 @@ cd boost_1_65_1
 ./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
 cd $CURRDIR
+mkdir -p $CURRDIR/wheelhouse
 
 git clone https://github.com/borglab/gtsam.git -b develop
 
@@ -75,7 +76,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     "${PYBIN}/python3" setup.py bdist_wheel
-    cp ./dist/*.whl ./wheelhouse
+    cp ./dist/*.whl $CURRDIR/wheelhouse
 done
 
 # Bundle external shared libraries into the wheels
