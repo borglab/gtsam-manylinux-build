@@ -15,6 +15,7 @@ cd boost_1_65_1
 ./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
 cd $CURRDIR
+mkdir -p $CURRDIR/wheelhouse_unrepaired
 mkdir -p $CURRDIR/wheelhouse
 
 git clone https://github.com/borglab/gtsam.git -b develop
@@ -35,7 +36,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
-    "${PYBIN}/pip3" install cmake
+    "${PYBIN}/pip3" install cmake delocate
 
     #PYTHON_EXECUTABLE=${PYBIN}/python
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
@@ -76,14 +77,15 @@ for PYVER in ${PYTHON_VERS[@]}; do
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     "${PYBIN}/python3" setup.py bdist_wheel
-    cp ./dist/*.whl $CURRDIR/wheelhouse
+    cp ./dist/*.whl $CURRDIR/wheelhouse_unrepaired
 done
 
 # Bundle external shared libraries into the wheels
-# for whl in /io/wheelhouse/*.whl; do
-#     auditwheel repair "$whl" -w /io/wheelhouse/
-#     rm $whl
-# done
+for whl in $CURRDIR/wheelhouse_unrepaired/*.whl; do
+    delocate-listdeps --all "$whl"
+    delocate-wheel -w "$CURRDIR/wheelhouse" -v "$whl"
+    rm $whl
+done
 
 # for whl in /io/wheelhouse/*.whl; do
 #     new_filename=$(echo $whl | sed "s#\.none-manylinux2014_x86_64\.#.#g")
