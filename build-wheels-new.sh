@@ -1,5 +1,8 @@
 #!/bin/bash
-set -x
+set -x -e
+
+# Install a system package required by our library
+yum install -y wget libicu libicu-devel
 
 echo "Current CentOS Version:"
 cat /etc/centos-release
@@ -12,9 +15,6 @@ yum install -y devtoolset-3-gcc-c++
 source /opt/rh/devtoolset-3/enable
 echo "Current GCC version:"
 gcc -v
-
-# Install a system package required by our library
-yum install -y wget libicu libicu-devel
 
 CURRDIR=$(pwd)
 
