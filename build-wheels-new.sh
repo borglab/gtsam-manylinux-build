@@ -1,8 +1,28 @@
 #!/bin/bash
 set -x -e
 
+function retry {
+  local retries=$1
+  shift
+
+  local count=0
+  until "$@"; do
+    exit=$?
+    wait=$((2 ** $count))
+    count=$(($count + 1))
+    if [ $count -lt $retries ]; then
+      echo "Retry $count/$retries exited $exit, retrying in $wait seconds..."
+      sleep $wait
+    else
+      echo "Retry $count/$retries exited $exit, no more retries left."
+      return $exit
+    fi
+  done
+  return 0
+}
+
 # Install a system package required by our library
-yum install -y wget libicu libicu-devel
+retry 3 yum install -y wget libicu libicu-devel
 
 echo "Current CentOS Version:"
 cat /etc/centos-release
@@ -11,7 +31,7 @@ rpm --import http://linuxsoft.cern.ch/cern/scl/RPM-GPG-KEY-cern
 
 wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo
 
-yum install -y devtoolset-3-gcc-c++
+retry 3 yum install -y devtoolset-3-gcc-c++
 source /opt/rh/devtoolset-3/enable
 echo "Current GCC version:"
 gcc -v
@@ -21,7 +41,7 @@ CURRDIR=$(pwd)
 # Build Boost staticly
 mkdir -p boost_build
 cd boost_build
-wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
+retry 3 wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
 tar xzf boost_1_65_1.tar.gz
 cd boost_1_65_1
 ./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex
