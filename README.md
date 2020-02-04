@@ -1,6 +1,6 @@
 # GTSAM Python Wheel Builder
 
-![CI](https://github.com/ProfFan/gtsam-manylinux-build/workflows/CI/badge.svg)
+![CI](https://github.com/ProfFan/gtsam-manylinux-build/workflows/CI/badge.svg) ![Pybind11 CI](https://github.com/borglab/gtsam-manylinux-build/workflows/Pybind11%20CI/badge.svg)
 
 ## How to Build
 
