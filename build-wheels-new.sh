@@ -1,6 +1,18 @@
 #!/bin/bash
 set -x
 
+echo "Current CentOS Version:"
+cat /etc/centos-release
+
+rpm --import http://linuxsoft.cern.ch/cern/scl/RPM-GPG-KEY-cern
+
+wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo
+
+yum install -y devtoolset-3-gcc-c++
+source /opt/rh/devtoolset-3/enable
+echo "Current GCC version:"
+gcc -v
+
 # Install a system package required by our library
 yum install -y wget libicu libicu-devel
 
@@ -81,7 +93,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     set -e -x
     
     make -j$(nproc) install
-    cd $BUILDDIR/../gtsam_install/cython
+    cd $BUILDDIR/../gtsam_install
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT

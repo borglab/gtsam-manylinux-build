@@ -76,7 +76,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     set -e -x
     
     make -j$(sysctl -n hw.logicalcpu) install
-    cd $BUILDDIR/../gtsam_install/cython
+    cd $BUILDDIR/../gtsam_install
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     "${PYBIN}/python3" setup.py bdist_wheel
