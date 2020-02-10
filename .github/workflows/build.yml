@@ -20,10 +20,17 @@ jobs:
           sudo docker run --rm -e PLAT=manylinux2014_x86_64 -v `pwd`:/io quay.io/pypa/manylinux2014_x86_64 /io/build-wheels.sh ${{ matrix.pyversion }}
         fi
     - name: Archive wheels
+      if: ${{ matrix.pyversion }} != "cp27-cp27mu"
       uses: actions/upload-artifact@v1
       with:
         name: gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
         path: wheelhouse/gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+    - name: Archive wheels (2.7)
+      if: ${{ matrix.pyversion }} == "cp27-cp27mu"
+      uses: actions/upload-artifact@v1
+      with:
+        name: gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2010_x86_64.whl
+        path: wheelhouse/gtsam-4.0.2-${{ matrix.pyversion }}-manylinux2010_x86_64.whl
   mac-build:
     name: macOS Build
     runs-on: macos-latest

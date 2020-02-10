@@ -92,8 +92,8 @@ for whl in /io/wheelhouse/*.whl; do
 done
 
 for whl in /io/wheelhouse/*.whl; do
-    new_filename=$(echo $whl | sed "s#\.none-manylinux2014_x86_64\.#.#g")
-    new_filename=$(echo $new_filename | sed "s#\.manylinux2014_x86_64\.#.#g") # For 37 and 38
+    new_filename=$(echo $whl | sed "s#\.none-$PLAT\.#.#g")
+    new_filename=$(echo $new_filename | sed "s#\.$PLAT\.#.#g") # For 37 and 38
     new_filename=$(echo $new_filename | sed "s#-none-#-#g")
     mv $whl $new_filename
 done
