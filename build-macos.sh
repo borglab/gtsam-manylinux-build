@@ -53,6 +53,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON \
         -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
         -DGTSAM_PYTHON_VERSION=3 \
+        -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
