@@ -17,7 +17,7 @@ cd boost_1_65_1
 
 cd $CURRDIR
 
-git clone https://github.com/borglab/gtsam.git -b develop
+git clone https://github.com/jingwuOUO/gtsam.git -b jing_timing
 
 ORIGPATH=$PATH
 
