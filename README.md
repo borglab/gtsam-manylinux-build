@@ -17,3 +17,7 @@ mv gtsam-4.0.2-cp36-cp36m-manylinux2014_x86_64.none-manylinux2014_x86_64.whl gts
 ## How to Build on macOS
 
 Please consult `build-macos.h`.
+
+# Current Build Date
+
+2020-3-10
