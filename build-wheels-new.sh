@@ -49,7 +49,7 @@ cd boost_1_65_1
 
 cd $CURRDIR
 
-git clone https://github.com/ProfFan/gtsam.git -b feature/pybind11_addition
+git clone https://github.com/borglab/gtsam.git -b feature/new_wrapper
 
 ORIGPATH=$PATH
 

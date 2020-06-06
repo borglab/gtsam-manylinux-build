@@ -1,6 +1,11 @@
 name: Pybind11 CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+    types: [pybind-wrapper]
 
 jobs:
   build-new:

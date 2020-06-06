@@ -1,6 +1,11 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+    types: [cython-wrapper]
 
 jobs:
   build:
