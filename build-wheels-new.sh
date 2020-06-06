@@ -39,7 +39,7 @@ CURRDIR=$(pwd)
 # Build Boost staticly
 mkdir -p boost_build
 cd boost_build
-retry 3 wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
+retry 3 wget https://downloads.sourceforge.net/project/boost/boost/1.65.1/boost_1_65_1.tar.gz
 tar xzf boost_1_65_1.tar.gz
 cd boost_1_65_1
 ./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex
