@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      - jing
+      - cayley
   repository_dispatch:
     types: [cython-wrapper]
 

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - cayley
   repository_dispatch:
     types: [pybind-wrapper]
 
