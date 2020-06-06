@@ -27,9 +27,7 @@ retry 3 yum install -y wget libicu libicu-devel
 echo "Current CentOS Version:"
 cat /etc/centos-release
 
-rpm --import http://linuxsoft.cern.ch/cern/scl/RPM-GPG-KEY-cern
-
-wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo
+yum install centos-release-scl-rh
 
 retry 3 yum install -y devtoolset-3-gcc-c++
 source /opt/rh/devtoolset-3/enable
