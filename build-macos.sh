@@ -11,7 +11,7 @@ cd boost_build
 wget https://downloads.sourceforge.net/project/boost/boost/1.65.1/boost_1_65_1.tar.gz
 tar xzf boost_1_65_1.tar.gz
 cd boost_1_65_1
-./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex
+./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex clang-darwin
 ./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
 cd $CURRDIR
