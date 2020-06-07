@@ -29,8 +29,8 @@ cat /etc/centos-release
 
 yum install centos-release-scl-rh
 
-retry 3 yum install -y devtoolset-4-gcc-c++
-source /opt/rh/devtoolset-4/enable
+retry 3 yum install -y devtoolset-7-gcc-c++
+source /opt/rh/devtoolset-7/enable
 echo "Current GCC version:"
 gcc -v
 
