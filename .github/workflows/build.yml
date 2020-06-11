@@ -6,6 +6,9 @@ on:
       - master
       - jing
       - cayley
+      - option/pose3expmap
+      - option/rot3expmap
+      - option/quaternion
   repository_dispatch:
     types: [cython-wrapper]
 

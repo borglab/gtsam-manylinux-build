@@ -8,9 +8,9 @@ CURRDIR=$(pwd)
 # Build Boost staticly
 mkdir -p boost_build
 cd boost_build
-wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
-tar xzf boost_1_65_1.tar.gz
-cd boost_1_65_1
+wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.gz
+tar xzf boost_1_73_0.tar.gz
+cd boost_1_73_0
 ./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex clang-darwin
 ./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
