@@ -1,8 +1,28 @@
 #!/bin/bash
-set -x
+set -x -e
+
+function retry {
+  local retries=$1
+  shift
+
+  local count=0
+  until "$@"; do
+    exit=$?
+    wait=$((2 ** $count))
+    count=$(($count + 1))
+    if [ $count -lt $retries ]; then
+      echo "Retry $count/$retries exited $exit, retrying in $wait seconds..."
+      sleep $wait
+    else
+      echo "Retry $count/$retries exited $exit, no more retries left."
+      return $exit
+    fi
+  done
+  return 0
+}
 
 # Install a system package required by our library
-yum install -y wget libicu libicu-devel
+retry 3 yum install -y wget libicu libicu-devel
 
 CURRDIR=$(pwd)
 
