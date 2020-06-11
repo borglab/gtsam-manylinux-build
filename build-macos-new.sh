@@ -69,6 +69,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
         -DGTSAM_USE_QUATERNIONS=OFF \
+        -DGTSAM_POSE3_EXPMAP=ON \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=OFF \
         -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
