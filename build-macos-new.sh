@@ -21,7 +21,7 @@ function retry {
   return 0
 }
 
-brew install wget python
+brew install wget python cmake
 
 CURRDIR=$(pwd)
 
@@ -56,7 +56,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
-    "${PYBIN}/pip3" install cmake delocate
+    "${PYBIN}/pip3" install delocate
 
     #PYTHON_EXECUTABLE=${PYBIN}/python
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
