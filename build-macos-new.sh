@@ -77,6 +77,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
+        -DBoost_USE_STATIC_RUNTIME=ON \
         -DBOOST_ROOT=$CURRDIR/boost_install \
         -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install/lib/cmake/Boost-1.73.0/ \
         -DBoost_NO_SYSTEM_PATHS=OFF \
