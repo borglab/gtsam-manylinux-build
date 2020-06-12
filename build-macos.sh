@@ -58,6 +58,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=/usr/local \
+        -DCMAKE_PREFIX_PATH=/usr/local \
         -DBoost_NO_SYSTEM_PATHS=ON \
         -DBUILD_STATIC_METIS=ON
         # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
