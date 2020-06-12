@@ -60,7 +60,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBOOST_ROOT=$CURRDIR/boost_install \
         -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install \
         -DBoost_NO_SYSTEM_PATHS=OFF \
-        -DBUILD_STATIC_METIS=ON
+        -DBUILD_STATIC_METIS=ON \
+        --trace
         # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
         # -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         # -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
