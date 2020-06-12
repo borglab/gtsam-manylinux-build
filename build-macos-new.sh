@@ -78,7 +78,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=$CURRDIR/boost_install \
-        -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install \
+        -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install/lib/cmake/Boost-1.73.0/ \
         -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON \
         -DGTSAM_TYPEDEF_POINTS_TO_VECTORS=ON \
