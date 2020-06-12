@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -x -e
 
 brew install wget python cmake
 
@@ -11,7 +11,7 @@ cd boost_build
 wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.gz
 tar xzf boost_1_73_0.tar.gz
 cd boost_1_73_0
-./bootstrap.sh --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex clang-darwin
+./bootstrap.sh --prefix=$CURRDIR/boost_install --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex clang-darwin
 ./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
 
 cd $CURRDIR
@@ -57,8 +57,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
-        -DBOOST_ROOT=/usr/local \
-        -DCMAKE_PREFIX_PATH=/usr/local \
+        -DBOOST_ROOT=$CURRDIR/boost_install \
+        -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install \
         -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON
         # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
