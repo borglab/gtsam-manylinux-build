@@ -79,7 +79,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=/usr/local \
         -DCMAKE_PREFIX_PATH=/usr/local \
-        -DBoost_NO_SYSTEM_PATHS=ON \
+        -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON \
         -DGTSAM_TYPEDEF_POINTS_TO_VECTORS=ON \
         -DGTSAM_BUILD_PYTHON=ON
