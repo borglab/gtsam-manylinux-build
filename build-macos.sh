@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x -e
 
+brew update
 brew install wget python cmake
 
 CURRDIR=$(pwd)

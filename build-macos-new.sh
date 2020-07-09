@@ -21,6 +21,7 @@ function retry {
   return 0
 }
 
+brew update
 brew install wget python cmake
 
 CURRDIR=$(pwd)
