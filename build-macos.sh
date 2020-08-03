@@ -2,6 +2,7 @@
 set -x -e
 
 brew update
+brew uninstall bazel
 brew upgrade
 brew install wget python cmake
 
@@ -79,6 +80,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     set -e -x
     
     make -j$(sysctl -n hw.logicalcpu) install
+    make python-install
     cd $BUILDDIR/../gtsam_install/cython
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
