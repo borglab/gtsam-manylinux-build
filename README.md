@@ -11,7 +11,7 @@ sudo docker run --rm -e PLAT=manylinux2014_x86_64 -v `pwd`:/io quay.io/pypa/many
 You will need to rename the built files to a valid name:
 
 ```bash
-mv gtsam-4.0.3-cp36-cp36m-manylinux2014_x86_64.none-manylinux2014_x86_64.whl gtsam-4.0.3-cp36-none-any.whl
+mv gtsam-4.1.0-cp36-cp36m-manylinux2014_x86_64.none-manylinux2014_x86_64.whl gtsam-4.1.0-cp36-none-any.whl
 ```
 
 ## How to Build on macOS
