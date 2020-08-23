@@ -68,7 +68,7 @@ declare -a PYTHON_VERS=( $1 )
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="/opt/python/$PYVER/bin"
-    PYVER_NUM=$PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])"
+    PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
     "${PYBIN}/pip" install -r /io/requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
