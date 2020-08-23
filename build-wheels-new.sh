@@ -113,8 +113,16 @@ for PYVER in ${PYTHON_VERS[@]}; do
     fi
     set -e -x
     
-    make -j$(nproc) install
-    
+    make -j$(nproc) install &
+
+    start=$(date +%s)
+    while ps -p $! > /dev/null
+    do
+      sleep 60
+      now=$(date +%s)
+      printf "%d seconds have elapsed\n" $(( (now - start) ))
+    done
+
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     cd python
 
