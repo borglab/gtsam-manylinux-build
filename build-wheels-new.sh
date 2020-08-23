@@ -68,6 +68,7 @@ declare -a PYTHON_VERS=( $1 )
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="/opt/python/$PYVER/bin"
+    PYVER_NUM=$PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])"
     "${PYBIN}/pip" install -r /io/requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
@@ -89,7 +90,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_USE_QUATERNIONS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=OFF \
-        -DGTSAM_PYTHON_VERSION=Default \
+        -DGTSAM_PYTHON_VERSION=$PYVER_NUM \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
         -DBoost_USE_STATIC_LIBS=ON \
