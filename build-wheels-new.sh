@@ -90,7 +90,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_INSTALL_CYTHON_TOOLBOX=OFF \
         -DGTSAM_PYTHON_VERSION=Default \
-        -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
+        -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBOOST_ROOT=/usr/local \
@@ -115,6 +115,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
     make -j$(nproc) install
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
+    cd python
+
     "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
     cp ./dist/*.whl /io/wheelhouse
 done

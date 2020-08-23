@@ -77,7 +77,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
         -DGTSAM_PYTHON_VERSION=3 \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
-        -DGTSAM_ALLOW_DEPRECATED_SINCE_V4=OFF \
+        -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBoost_USE_STATIC_RUNTIME=ON \
@@ -103,6 +103,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
     make -j$(sysctl -n hw.logicalcpu) install
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
+    cd python
+    
     "${PYBIN}/python3" setup.py bdist_wheel
     cp ./dist/*.whl $CURRDIR/wheelhouse_unrepaired
 done
