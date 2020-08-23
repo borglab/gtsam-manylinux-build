@@ -47,7 +47,7 @@ cd boost_1_65_1
 
 cd $CURRDIR
 
-git clone https://github.com/borglab/gtsam.git -b feature/new_wrapper
+git clone https://github.com/borglab/gtsam.git -b develop
 
 ORIGPATH=$PATH
 
