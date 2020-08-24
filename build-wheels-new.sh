@@ -143,9 +143,6 @@ for whl in /io/wheelhouse/*.whl; do
     mv $whl $new_filename
 done
 
-# cleanup for custom runner
-sudo chown -R $(whoami):$(whoami) .
-
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
 #     "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
