@@ -144,7 +144,7 @@ for whl in /io/wheelhouse/*.whl; do
 done
 
 # cleanup for custom runner
-sudo chown -R $USER:$USER .
+sudo chown -R $(whoami):$(whoami) .
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
