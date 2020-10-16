@@ -20,4 +20,4 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2020-07-08
+2020-10-15
