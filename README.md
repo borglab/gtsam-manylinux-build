@@ -22,14 +22,14 @@ Please consult `build-macos.h`.
 
 2020-10-22
 
-## Update Instructions
+## Wheel Update Instructions
 
 First, `pip install twine`
 
 ```bash
 twine upload --repository testpypi {WHEEL_FILE_NAME}.whl
 ```
-For the main repo, the release version should have another number after it, e.g. `4.1.0-1`. For the test repo, this is not necessary
+For the main repo, the release version should have another number after it, e.g. `4.1.0-1`. For the [test pypi server](https://test.pypi.org/project/gtsam/), this is not necessary
 enter username and password,  and the test version can be tested via:
 ```bash
 pip install --index-url https://test.pypi.org/simple {PACKAGE_NAME}
