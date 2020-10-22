@@ -56,7 +56,7 @@ touch ${PYTHON_LIBRARY}
 
 # FIX auditwheel
 # https://github.com/pypa/auditwheel/issues/136
-ls /opt/_internal
+echo /opt/_internal/*/*/*/*/auditwheel
 cd /opt/_internal/cpython-3.7.9/lib/python3.7/site-packages/auditwheel/
 patch -p2 < /io/auditwheel.txt
 cd $CURRDIR
