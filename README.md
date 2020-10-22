@@ -20,4 +20,17 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2020-10-15
+2020-10-22
+
+## Update Instructions
+
+First, `pip install twine`
+
+```bash
+twine upload --repository testpypi {WHEEL_FILE_NAME}.whl
+```
+For the main repo, the release version should have another number after it, e.g. `4.1.0-1`. For the test repo, this is not necessary
+enter username and password,  and the test version can be tested via:
+```bash
+pip install --index-url https://test.pypi.org/simple {PACKAGE_NAME}
+```
