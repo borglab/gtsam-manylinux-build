@@ -41,7 +41,7 @@ cd $CURRDIR
 mkdir -p $CURRDIR/wheelhouse_unrepaired
 mkdir -p $CURRDIR/wheelhouse
 
-git clone https://github.com/borglab/gtsam.git -b develop
+git clone https://github.com/borglab/gtsam.git -b prelease/4.1.1
 
 ORIGPATH=$PATH
 

@@ -47,7 +47,7 @@ cd boost_1_65_1
 
 cd $CURRDIR
 
-git clone https://github.com/borglab/gtsam.git -b develop
+git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1
 
 ORIGPATH=$PATH
 
