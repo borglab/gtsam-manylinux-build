@@ -61,7 +61,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
     "${PYBIN}/pip3" install delocate
 
-    #PYTHON_EXECUTABLE=${PYBIN}/python
+    PYTHON_EXECUTABLE=${PYBIN}/python3
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
     # echo ""
@@ -73,8 +73,6 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
         -DGTSAM_USE_QUATERNIONS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
-        -DGTSAM_INSTALL_CYTHON_TOOLBOX=OFF \
-        -DCYTHON_EXECUTABLE=$($PYBIN/python3 -c "import site; print(site.getsitepackages()[0])")/cython.py \
         -DGTSAM_PYTHON_VERSION=3 \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
@@ -86,9 +84,9 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON \
         -DGTSAM_TYPEDEF_POINTS_TO_VECTORS=ON \
-        -DGTSAM_BUILD_PYTHON=ON
+        -DGTSAM_BUILD_PYTHON=ON \
+        -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
         # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
-        # -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         # -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
         # -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
     ec=$?
