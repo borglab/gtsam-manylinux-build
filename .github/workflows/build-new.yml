@@ -5,6 +5,8 @@ on:
     branches:
       - master
       - cayley
+  pull_request:
+    types: [ assigned, opened, synchronize, reopened ]
   repository_dispatch:
     types: [pybind-wrapper]
 
