@@ -5,13 +5,15 @@ on:
     branches:
       - master
       - cayley
+  pull_request:
+    types: [ assigned, opened, synchronize, reopened ]
   repository_dispatch:
     types: [pybind-wrapper]
 
 jobs:
   build-new:
     name: New Wrapper Linux Build
-    runs-on: self-hosted
+    # runs-on: self-hosted
     strategy:
       matrix:
         pyversion: ["cp35-cp35m", "cp36-cp36m", "cp37-cp37m", "cp38-cp38", "cp39-cp39"]
