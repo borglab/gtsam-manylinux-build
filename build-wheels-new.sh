@@ -100,7 +100,9 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBUILD_SHARED_LIBS=OFF \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
         -DGTSAM_BUILD_PYTHON=ON \
-        -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}; ec=$?
+        -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE} \
+        -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR} \
+        -DPYTHON_LIBRARY=${PYTHON_LIBRARY}; ec=$?
 
     if [ $ec -ne 0 ]; then
         echo "Error:"
