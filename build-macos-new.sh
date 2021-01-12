@@ -50,6 +50,10 @@ touch ${PYTHON_LIBRARY}
 
 declare -a PYTHON_VERS=( $1 )
 
+# Get the python version numbers only by splitting the string
+split_array=(${PYTHON_VERS//@/ })
+VERSION_NUMBER=${split_array[1]}
+
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="/usr/local/opt/$PYVER/bin"
@@ -73,7 +77,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
         -DGTSAM_USE_QUATERNIONS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
-        -DGTSAM_PYTHON_VERSION=3 \
+        -DGTSAM_PYTHON_VERSION=$VERSION_NUMBER \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
@@ -83,7 +87,6 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DCMAKE_PREFIX_PATH=$CURRDIR/boost_install/lib/cmake/Boost-1.73.0/ \
         -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON \
-        -DGTSAM_TYPEDEF_POINTS_TO_VECTORS=ON \
         -DGTSAM_BUILD_PYTHON=ON \
         -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
         # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
