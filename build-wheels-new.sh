@@ -51,9 +51,6 @@ git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1
 
 ORIGPATH=$PATH
 
-PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by-interpreter
-touch ${PYTHON_LIBRARY}
-
 # FIX auditwheel
 # https://github.com/pypa/auditwheel/issues/136
 echo /opt/_internal/*/*/*/*/auditwheel
@@ -78,19 +75,17 @@ for PYVER in ${PYTHON_VERS[@]}; do
     "${PYBIN}/pip" install cmake
 
     PYTHON_EXECUTABLE=${PYBIN}/python
-    PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
+    PYTHON_INCLUDE_DIR=$(${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
+    PYTHON_LIBRARY=$(${PYTHON_EXECUTABLE} -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 
     echo ""
     echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
-    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
     
     cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
         -DGTSAM_USE_QUATERNIONS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
-        -DGTSAM_INSTALL_CYTHON_TOOLBOX=OFF \
-        -DGTSAM_PYTHON_VERSION=$PYVER_NUM \
         -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
         -DCMAKE_INSTALL_PREFIX=$BUILDDIR/../gtsam_install \
         -DBoost_USE_STATIC_LIBS=ON \
@@ -99,7 +94,10 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBUILD_STATIC_METIS=ON \
         -DBUILD_SHARED_LIBS=OFF \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
-        -DGTSAM_BUILD_PYTHON=ON; ec=$?
+        -DGTSAM_BUILD_PYTHON=ON \
+        -DGTSAM_PYTHON_VERSION=$PYVER_NUM \
+        -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR \
+        -DPYTHON_LIBRARY=$PYTHON_LIBRARY; ec=$?
 
     if [ $ec -ne 0 ]; then
         echo "Error:"
