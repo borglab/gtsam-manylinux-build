@@ -76,6 +76,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
     ${PYBIN}/pip install cmake
 
     PYTHON_EXECUTABLE=${PYBIN}/python
+    # We use distutils to get the include directory and the library path directly from the selected interpreter
+    # We provide these variables to CMake to hint what Python development files we wish to use in the build.
     PYTHON_INCLUDE_DIR=$(${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
     PYTHON_LIBRARY=$(${PYTHON_EXECUTABLE} -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 
