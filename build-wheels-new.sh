@@ -66,13 +66,14 @@ declare -a PYTHON_VERS=( $1 )
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="/opt/python/$PYVER/bin"
     PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
-    "${PYBIN}/pip" install -r /io/requirements.txt
+
+    ${PYBIN}/pip install -r /io/requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$ORIGPATH
-    "${PYBIN}/pip" install cmake
+    ${PYBIN}/pip install cmake
 
     PYTHON_EXECUTABLE=${PYBIN}/python
     PYTHON_INCLUDE_DIR=$(${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
@@ -81,6 +82,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     echo ""
     echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
+    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
     
     cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
