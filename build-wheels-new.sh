@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CURRDIR=$(pwd)
+
 # FIX auditwheel
 # https://github.com/pypa/auditwheel/issues/136
 echo /opt/_internal/*/*/*/*/auditwheel
@@ -11,7 +13,6 @@ PYBIN="/opt/python/$PYTHON_VERSION/bin"
 PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
 PYTHONVER="$(basename $(dirname $PYBIN))"
 
-CURRDIR=$(pwd)
 BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
 mkdir -p $BUILDDIR
 
