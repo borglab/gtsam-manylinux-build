@@ -7,20 +7,15 @@ CURRDIR=$(pwd)
 echo /opt/_internal/*/*/*/*/auditwheel
 cd /opt/_internal/tools/lib64/python3.7/site-packages/auditwheel
 patch -p2 < /io/auditwheel.txt
-cd $CURRDIR
+cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
 PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
 PYTHONVER="$(basename $(dirname $PYBIN))"
 
-BUILDDIR="/io/gtsam_$PYTHONVER/gtsam_build"
-mkdir -p $BUILDDIR
-
-cd $BUILDDIR
 export PATH=$PYBIN:$PATH
 
 ${PYBIN}/pip install -r /io/requirements.txt
-${PYBIN}/pip install cmake
 
 PYTHON_EXECUTABLE=${PYBIN}/python
 # We use distutils to get the include directory and the library path directly from the selected interpreter
@@ -34,7 +29,7 @@ echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
 echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 echo ""
 
-cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
+cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
     -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
     -DGTSAM_USE_QUATERNIONS=OFF \
     -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
@@ -46,6 +41,7 @@ cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_STATIC_METIS=ON \
     -DBUILD_SHARED_LIBS=OFF \
     -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
+    -DGTSAM_WITH_TBB=OFF \
     -DGTSAM_BUILD_PYTHON=ON \
     -DGTSAM_PYTHON_VERSION=$PYVER_NUM \
     -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR \
