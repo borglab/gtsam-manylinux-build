@@ -2,6 +2,12 @@
 
 CURRDIR=$(pwd)
 
+# Clone GTSAM
+RUN git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1 /gtsam
+
+# Set the build directory
+BUILDDIR="/io/gtsam_build"
+
 # FIX auditwheel
 # https://github.com/pypa/auditwheel/issues/136
 echo /opt/_internal/*/*/*/*/auditwheel
