@@ -4,6 +4,7 @@
 
 ## How to Build on Linux
 
+Run:
 ```bash
 sudo docker run --rm -e PLAT=manylinux2014_x86_64 -v `pwd`:/io quay.io/pypa/manylinux2014_x86_64 /io/build-wheels.sh
 ```
@@ -24,7 +25,7 @@ Please consult `build-macos.h`.
 
 ## Wheel Update Instructions
 
-First, `pip install twine`
+First, run `pip install twine`
 
 ```bash
 twine upload --repository testpypi {WHEEL_FILE_NAME}.whl
