@@ -11,8 +11,8 @@ on:
     types: [pybind-wrapper]
 
 jobs:
-  build-new:
-    name: New Wrapper Linux Build
+  linux-build:
+    name: Wrapper Linux Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,8 +31,8 @@ jobs:
       with:
         name: gtsam-4.1.1-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
         path: wheelhouse/gtsam-4.1.1-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
-  new-mac-build:
-    name: New Wrapper macOS Build
+  mac-build:
+    name: Wrapper macOS Build
     runs-on: macos-latest
     strategy:
       matrix:
