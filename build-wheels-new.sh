@@ -7,12 +7,7 @@ git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1 /gtsam
 
 # Set the build directory
 BUILDDIR="/io/gtsam_build"
-
-# FIX auditwheel
-# https://github.com/pypa/auditwheel/issues/136
-echo /opt/_internal/*/*/*/*/auditwheel
-cd /opt/_internal/tools/lib64/python3.7/site-packages/auditwheel
-patch -p2 < /io/auditwheel.txt
+mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
@@ -64,11 +59,11 @@ make -j$(nproc) install
 
 mkdir -p /io/wheelhouse
 
-# "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
 cd python
 
 "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
-# cp ./dist/*.whl /io/wheelhouse/
+
+cp ./dist/*.whl /io/wheelhouse/
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
@@ -81,9 +76,3 @@ for whl in /io/wheelhouse/*.whl; do
     new_filename=$(echo $new_filename | sed "s#-none-#-#g")
     mv $whl $new_filename
 done
-
-# Install packages and test
-# for PYBIN in /opt/python/*/bin/; do
-#     "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
-#     (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
-# done
