@@ -7,6 +7,7 @@ git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1 /gtsam
 
 # Set the build directory
 BUILDDIR="/io/gtsam_build"
+mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
@@ -61,6 +62,8 @@ mkdir -p /io/wheelhouse
 cd python
 
 "${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
+
+cp ./dist/*.whl /io/wheelhouse/
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
