@@ -21,7 +21,7 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2021-06-19
+2021-07-15
 
 ## Wheel Update Instructions
 

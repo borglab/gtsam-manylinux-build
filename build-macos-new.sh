@@ -27,7 +27,7 @@ brew update
 brew install wget python cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="feature/wrap-multiple-interfaces"
+GTSAM_BRANCH="develop"
 
 # Build Boost staticly
 mkdir -p boost_build

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="feature/wrap-multiple-interfaces"
+GTSAM_BRANCH="develop"
 
 # Clone GTSAM
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
