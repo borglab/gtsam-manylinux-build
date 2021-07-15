@@ -27,6 +27,7 @@ brew update
 brew install wget python cmake || true
 
 CURRDIR=$(pwd)
+GTSAM_BRANCH="develop"
 
 # Build Boost staticly
 mkdir -p boost_build
@@ -41,7 +42,7 @@ cd $CURRDIR
 mkdir -p $CURRDIR/wheelhouse_unrepaired
 mkdir -p $CURRDIR/wheelhouse
 
-git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1
+git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH
 
 ORIGPATH=$PATH
 

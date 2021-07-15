@@ -1,9 +1,10 @@
 #!/bin/bash
 
 CURRDIR=$(pwd)
+GTSAM_BRANCH="develop"
 
 # Clone GTSAM
-git clone https://github.com/borglab/gtsam.git -b prerelease/4.1.1 /gtsam
+git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
 
 # Set the build directory
 BUILDDIR="/io/gtsam_build"
