@@ -11,6 +11,8 @@ BUILDDIR="/io/gtsam_build"
 mkdir $BUILDDIR
 cd $BUILDDIR
 
+ls -ltrh /usr/local/
+
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
 PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
 PYTHONVER="$(basename $(dirname $PYBIN))"
