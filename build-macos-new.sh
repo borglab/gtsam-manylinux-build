@@ -27,7 +27,7 @@ brew update
 brew install wget python cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="develop"
+GTSAM_BRANCH="add-pose2-lago-to-wrapper"
 
 # Build Boost staticly
 mkdir -p boost_build
