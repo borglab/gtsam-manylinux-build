@@ -21,7 +21,9 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2021-11-19
+2021-12-21
+
+We are building for the 4.1.1 release.
 
 ## Wheel Update Instructions
 

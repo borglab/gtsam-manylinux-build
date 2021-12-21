@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="develop"
+GTSAM_BRANCH="release/4.1.1"
 
 # Clone GTSAM
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam

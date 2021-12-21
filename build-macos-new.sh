@@ -27,7 +27,7 @@ brew update
 brew install wget python cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="develop"
+GTSAM_BRANCH="release/4.1.1"
 
 # Build Boost staticly
 mkdir -p boost_build
