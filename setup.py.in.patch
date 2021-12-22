@@ -1,0 +1,23 @@
+--- ./python/setup.py.in	2021-12-20 17:11:59.000000000 -0500
++++ ./python/setup.py.in	2021-12-22 10:36:48.000000000 -0500
+@@ -20,6 +20,14 @@
+ # Cleaner to read in the contents rather than copy them over.
+ readme_contents = open("${GTSAM_SOURCE_DIR}/README.md").read()
+ 
++from setuptools.dist import Distribution
++
++# Tested with wheel v0.29.0
++class BinaryDistribution(Distribution):
++    """Distribution which always forces a binary package with platform name"""
++    def has_ext_modules(foo):
++        return True
++
+ setup(
+     name='gtsam',
+     description='Georgia Tech Smoothing And Mapping library',
+@@ -50,4 +58,5 @@
+     test_suite="gtsam.tests",
+     install_requires=open("${GTSAM_SOURCE_DIR}/python/requirements.txt").readlines(),
+     zip_safe=False,
++    distclass=BinaryDistribution
+ )

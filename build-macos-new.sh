@@ -44,6 +44,12 @@ mkdir -p $CURRDIR/wheelhouse
 
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH
 
+cd $CURRDIR/gtsam
+
+patch -p0 < ../setup.py.in.patch
+
+cd $CURRDIR
+
 ORIGPATH=$PATH
 
 PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by-interpreter
