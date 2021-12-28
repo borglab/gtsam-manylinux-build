@@ -27,13 +27,40 @@ We are building for the 4.1.1 release.
 
 ## Wheel Update Instructions
 
-First, run `pip install twine`
+For all OSs and architectures we support:
 
+First check if the wheels you have built can actually install and run by:
+
+1. Create a clean virtual environment
+2. `pip install {WHEEL}.whl` to install the wheel
+3. run the GTSAM unit tests to make sure the wheel works by going to `gtsam_repo/python/gtsam/tests` and `python -m unittest discover`
+
+* The most probable failures at this stage are:
+  * The wheel repair (auditwheel/delocate) programs have bugs and produced wrong binaries.
+  * Which needs manual patching, contact @ProfFan immediately
+
+If you have confirmed that it works, you can then:
+
+* Run `pip install twine` to install Twine
+* After that, upload to Test PyPI by:
 ```bash
 twine upload --repository testpypi {WHEEL_FILE_NAME}.whl
 ```
-For the main repo, the release version should have another number after it, e.g. `4.1.0-1`. For the [test pypi server](https://test.pypi.org/project/gtsam/), this is not necessary
-enter username and password,  and the test version can be tested via:
+* Now, uninstall `gtsam` in the virtual env, do
 ```bash
 pip install --index-url https://test.pypi.org/simple {PACKAGE_NAME}
 ```
+and test again with the unit tests
+
+* The most probable failures at this stage are:
+  * Inconsistent version tags between the METADATA and the file name of the wheel
+  * You did not test the wheel you uploaded in a fresh machine, so it's linking is not correct (only works for you)
+
+* If that still works, you can try upload to REAL PyPI (THIS IS IRREVERSIBLE!!!)
+```bash
+twine upload {WHEEL_FILE_NAME}.whl
+# OR if you tested all 8 wheels on Test PyPI and possible users
+twine upload {directory containing all wheels}
+```
+* Finally test again by using normal `pip install gtsam`
+* Rinse and repeat with every architecture that you are concerned with.
