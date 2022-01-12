@@ -139,6 +139,8 @@ for whln in $CURRDIR/wheelhouse/*.whl; do
 
     install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
 
+    zip -r ../$whl.whl ./*
+
     cd $CURRDIR/wheelhouse
 done
 
