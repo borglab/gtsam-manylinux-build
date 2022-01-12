@@ -126,6 +126,8 @@ for whl in $CURRDIR/wheelhouse_unrepaired/*.whl; do
     rm $whl
 done
 
+cd $CURRDIR/wheelhouse
+
 for whln in $CURRDIR/wheelhouse/*.whl; do
     whl=$(basename "${whln}" .whl)
     unzip $whl.whl -d $whl
@@ -137,7 +139,7 @@ for whln in $CURRDIR/wheelhouse/*.whl; do
 
     install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
 
-    cd /io/wheelhouse/
+    cd $CURRDIR/wheelhouse
 done
 
 # Install packages and test
