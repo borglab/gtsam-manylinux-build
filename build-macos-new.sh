@@ -28,6 +28,8 @@ brew install wget python cmake || true
 
 CURRDIR=$(pwd)
 GTSAM_BRANCH="release/4.2a2"
+GTSAM_LIB_VERSION="4.2.0"
+GTSAM_PYTHON_VERSION="4.2a2"
 
 # Build Boost staticly
 mkdir -p boost_build
@@ -124,12 +126,19 @@ for whl in $CURRDIR/wheelhouse_unrepaired/*.whl; do
     rm $whl
 done
 
-# for whl in /io/wheelhouse/*.whl; do
-#     new_filename=$(echo $whl | sed "s#\.none-manylinux2014_x86_64\.#.#g")
-#     new_filename=$(echo $new_filename | sed "s#\.manylinux2014_x86_64\.#.#g") # For 37 and 38
-#     new_filename=$(echo $new_filename | sed "s#-none-#-#g")
-#     mv $whl $new_filename
-# done
+for whln in /io/wheelhouse/*.whl; do
+    whl=$(basename "${whln}" .whl)
+    unzip $whl.whl -d $whl
+
+    cd $whl
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam/gtsam.cpython-*-darwin.so
+
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
+
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
+    
+    cd /io/wheelhouse/
+done
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
