@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2a2"
+GTSAM_BRANCH="feature/robustTriangulation"
 
 # Clone GTSAM
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
