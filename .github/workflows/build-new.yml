@@ -33,9 +33,10 @@ jobs:
         path: wheelhouse/gtsam-4.2a3-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
   mac-build:
     name: Wrapper macOS Build
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ["macos-11", "macos-10.15"]
         pyversion: ["python@3.8", "python@3.9"]
     steps:
     - name: Checkout
@@ -46,22 +47,5 @@ jobs:
     - name: Archive wheels
       uses: actions/upload-artifact@v1
       with:
-        name: wheels-macos-${{ matrix.pyversion }}
-        path: ./wheelhouse
-  mac-build-old:
-    name: Wrapper macOS Build
-    runs-on: macos-10.15
-    strategy:
-      matrix:
-        pyversion: ["python@3.8", "python@3.9"]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: Build the macOS wheels
-      run: |
-        ./build-macos-new.sh ${{ matrix.pyversion }}
-    - name: Archive wheels
-      uses: actions/upload-artifact@v1
-      with:
-        name: wheels-macos-${{ matrix.pyversion }}
+        name: wheels-macos-${{ matrix.pyversion }}-${{ matrix.os }}
         path: ./wheelhouse
