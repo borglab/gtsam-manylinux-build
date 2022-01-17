@@ -142,6 +142,7 @@ for whln in $CURRDIR/wheelhouse/*.whl; do
     zip -r ../$whl.whl ./*
 
     cd $CURRDIR/wheelhouse
+    rm -rf $whl
 done
 
 # Install packages and test
