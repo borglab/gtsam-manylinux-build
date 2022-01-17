@@ -48,3 +48,20 @@ jobs:
       with:
         name: wheels-macos-${{ matrix.pyversion }}
         path: ./wheelhouse
+  mac-build-old:
+    name: Wrapper macOS Build
+    runs-on: macos-10.15
+    strategy:
+      matrix:
+        pyversion: ["python@3.8", "python@3.9"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Build the macOS wheels
+      run: |
+        ./build-macos-new.sh ${{ matrix.pyversion }}
+    - name: Archive wheels
+      uses: actions/upload-artifact@v1
+      with:
+        name: wheels-macos-${{ matrix.pyversion }}
+        path: ./wheelhouse
