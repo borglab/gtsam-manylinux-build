@@ -128,23 +128,28 @@ done
 
 cd $CURRDIR/wheelhouse
 
-# Guess upstream has already fixed this isssue?
-# for whln in $CURRDIR/wheelhouse/*.whl; do
-#     whl=$(basename "${whln}" .whl)
-#     unzip $whl.whl -d $whl
+# Only for 3.8
 
-#     cd $whl
-#     install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam/gtsam.cpython-*-darwin.so
+if [ "${PYTHON_VERS[1]}" != "python@3.8" ]; then
+    exit 0
+fi
 
-#     install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
+for whln in $CURRDIR/wheelhouse/*.whl; do
+    whl=$(basename "${whln}" .whl)
+    unzip $whl.whl -d $whl
 
-#     install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
+    cd $whl
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam/gtsam.cpython-*-darwin.so
 
-#     zip -r ../$whl.whl ./*
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
 
-#     cd $CURRDIR/wheelhouse
-#     rm -rf $whl
-# done
+    install_name_tool -change @loader_path/../../../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib @loader_path/../gtsam.dylibs/libgtsam_unstable.$GTSAM_LIB_VERSION.dylib gtsam-$GTSAM_PYTHON_VERSION.data/purelib/gtsam_unstable/gtsam_unstable.cpython-*-darwin.so
+
+    zip -r ../$whl.whl ./*
+
+    cd $CURRDIR/wheelhouse
+    rm -rf $whl
+done
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
