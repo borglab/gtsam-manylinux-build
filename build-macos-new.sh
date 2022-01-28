@@ -130,7 +130,7 @@ cd $CURRDIR/wheelhouse
 
 # Only for 3.8
 
-if [ "${PYTHON_VERS[1]}" != "python@3.8" ]; then
+if [ "$VERSION_NUMBER" != "3.8" ]; then
     exit 0
 fi
 
