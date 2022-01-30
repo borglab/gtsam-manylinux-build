@@ -27,9 +27,9 @@ brew update
 brew install wget python cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2a3"
+GTSAM_BRANCH="release/4.2a4"
 GTSAM_LIB_VERSION="4.2.0"
-GTSAM_PYTHON_VERSION="4.2a3"
+GTSAM_PYTHON_VERSION="4.2a4"
 
 # Build Boost staticly
 mkdir -p boost_build
@@ -128,6 +128,12 @@ done
 
 cd $CURRDIR/wheelhouse
 
+# Only for 3.8
+
+if [ "$VERSION_NUMBER" != "3.8" ]; then
+    exit 0
+fi
+
 for whln in $CURRDIR/wheelhouse/*.whl; do
     whl=$(basename "${whln}" .whl)
     unzip $whl.whl -d $whl
@@ -142,6 +148,7 @@ for whln in $CURRDIR/wheelhouse/*.whl; do
     zip -r ../$whl.whl ./*
 
     cd $CURRDIR/wheelhouse
+    rm -rf $whl
 done
 
 # Install packages and test
