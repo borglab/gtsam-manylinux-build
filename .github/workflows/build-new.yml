@@ -1,4 +1,4 @@
-name: Pybind11 CI
+name: Ubuntu CI
 
 on:
   push:
