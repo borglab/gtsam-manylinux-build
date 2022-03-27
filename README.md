@@ -21,9 +21,9 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2022-02-01
+2022-03-27
 
-We are building for the 4.2a5 release.
+We are building for the 4.2a6 release.
 
 ## Wheel Update Instructions
 
