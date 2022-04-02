@@ -130,9 +130,9 @@ cd $CURRDIR/wheelhouse
 
 # Only for 3.8
 
-if [ "$VERSION_NUMBER" != "3.8" ]; then
-    exit 0
-fi
+# if [ "$VERSION_NUMBER" != "3.8" ]; then
+exit 0
+# fi
 
 for whln in $CURRDIR/wheelhouse/*.whl; do
     whl=$(basename "${whln}" .whl)
