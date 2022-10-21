@@ -66,13 +66,13 @@ VERSION_NUMBER=${split_array[1]}
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="$(brew --prefix "$1")/bin"
-    "${PYBIN}/pip3" install -r ./requirements.txt
+    "${PYBIN}/pip$VERSION_NUMBER" install -r ./requirements.txt
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="$CURRDIR/gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$PYBIN:$(brew --prefix)/bin:$ORIGPATH
-    "${PYBIN}/pip3" install delocate
+    "${PYBIN}/pip$VERSION_NUMBER" install delocate
 
     PYTHON_EXECUTABLE=${PYBIN}/python3
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
