@@ -66,21 +66,23 @@ VERSION_NUMBER=${split_array[1]}
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
     PYBIN="$(brew --prefix "$1")/bin"
-    "${PYBIN}/pip$VERSION_NUMBER" install -r ./requirements.txt
+    PIP="${PYBIN}/pip${VERSION_NUMBER}"
+    ${PIP} install -r ./requirements.txt
+
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="$CURRDIR/gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
     export PATH=$PYBIN:$PYBIN:$(brew --prefix)/bin:$ORIGPATH
-    "${PYBIN}/pip$VERSION_NUMBER" install delocate
+    ${PIP} install delocate
 
-    PYTHON_EXECUTABLE=${PYBIN}/python$VERSION_NUMBER
+    PYTHON_EXECUTABLE=${PYBIN}/python${VERSION_NUMBER}
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
     # echo ""
-    # echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
-    # echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
-    # echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
+    echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
+    echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
+    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
     
     cmake $CURRDIR/gtsam -DCMAKE_BUILD_TYPE=Release \
         -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
