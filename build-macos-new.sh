@@ -24,7 +24,7 @@ function retry {
 brew update
 # brew uninstall bazel
 # brew upgrade
-brew install wget python cmake || true
+brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
 GTSAM_BRANCH="release/4.2a7"
