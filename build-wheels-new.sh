@@ -12,7 +12,8 @@ mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
-PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
+# PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
+PYVER_NUM="3.10"
 PYTHONVER="$(basename $(dirname $PYBIN))"
 
 export PATH=$PYBIN:$PATH
