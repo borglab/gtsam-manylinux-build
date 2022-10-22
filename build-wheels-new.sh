@@ -1,9 +1,9 @@
 #!/bin/bash
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2a7"
 
 # Clone GTSAM
+GTSAM_BRANCH="release/4.2a7"
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
 
 # Set the build directory
@@ -12,8 +12,7 @@ mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
-# PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
-PYVER_NUM="3.10"
+PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
 PYTHONVER="$(basename $(dirname $PYBIN))"
 
 export PATH=$PYBIN:$PATH
@@ -31,6 +30,8 @@ echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
 echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
 echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 echo ""
+
+ls /opt/python/*
 
 cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
     -DGTSAM_BUILD_TESTS=OFF -DGTSAM_BUILD_UNSTABLE=ON \
