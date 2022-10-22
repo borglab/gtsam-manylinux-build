@@ -115,7 +115,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     cd python
     
-    "${PYBIN}/python3" setup.py bdist_wheel
+    "${PYBIN}/python$VERSION_NUMBER" setup.py bdist_wheel
     cp ./dist/*.whl $CURRDIR/wheelhouse_unrepaired
 done
 
