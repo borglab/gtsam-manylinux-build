@@ -12,7 +12,8 @@ mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
-PYVER_NUM=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
+PYVER_NUM_FULL=$($PYBIN/python -c "import sys;print(sys.version.split(\" \")[0])")
+PYVER_NUM=${PYVER_NUM_FULL%.*}
 PYTHONVER="$(basename $(dirname $PYBIN))"
 
 export PATH=$PYBIN:$PATH
@@ -22,13 +23,15 @@ ${PYBIN}/pip install -r /io/requirements.txt
 PYTHON_EXECUTABLE=${PYBIN}/python
 # We use distutils to get the include directory and the library path directly from the selected interpreter
 # We provide these variables to CMake to hint what Python development files we wish to use in the build.
-PYTHON_INCLUDE_DIR=$(${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
-PYTHON_LIBRARY=$(${PYTHON_EXECUTABLE} -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+PYTHON_INCLUDE_DIR=$(${PYTHON_EXECUTABLE} -c "from sysconfig import get_paths as gp; print(gp()['include'])")
+PYTHON_LIBRARY=$(${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 
 echo ""
+echo "PYBIN:${PYBIN}"
 echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
 echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
 echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
+echo "PYVER_NUM:${PYVER_NUM}"
 echo ""
 
 cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
@@ -45,9 +48,10 @@ cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
     -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
     -DGTSAM_WITH_TBB=OFF \
     -DGTSAM_BUILD_PYTHON=ON \
-    -DGTSAM_PYTHON_VERSION=$PYVER_NUM \
-    -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR \
-    -DPYTHON_LIBRARY=$PYTHON_LIBRARY; ec=$?
+    -DGTSAM_PYTHON_VERSION=$PYVER_NUM;
+    # -DPYTHON_LIBRARY=$PYTHON_LIBRARY \
+    # -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR;
+ec=$?
 
 if [ $ec -ne 0 ]; then
     echo "Error:"
