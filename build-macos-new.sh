@@ -74,7 +74,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     export PATH=$PYBIN:$PYBIN:$(brew --prefix)/bin:$ORIGPATH
     "${PYBIN}/pip$VERSION_NUMBER" install delocate
 
-    PYTHON_EXECUTABLE=${PYBIN}/python3
+    PYTHON_EXECUTABLE=${PYBIN}/python$VERSION_NUMBER
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
     # echo ""
