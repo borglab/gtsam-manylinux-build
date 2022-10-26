@@ -24,12 +24,12 @@ function retry {
 brew update
 # brew uninstall bazel
 # brew upgrade
-brew install wget python cmake || true
+brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2a6"
+GTSAM_BRANCH="release/4.2a7"
 GTSAM_LIB_VERSION="4.2.0"
-GTSAM_PYTHON_VERSION="4.2a6"
+GTSAM_PYTHON_VERSION="4.2a7"
 
 # Build Boost staticly
 mkdir -p boost_build
@@ -65,16 +65,18 @@ VERSION_NUMBER=${split_array[1]}
 
 # Compile wheels
 for PYVER in ${PYTHON_VERS[@]}; do
-    PYBIN="/usr/local/opt/$PYVER/bin"
-    "${PYBIN}/pip3" install -r ./requirements.txt
+    PYBIN="$(brew --prefix "$1")/bin"
+    PIP="${PYBIN}/pip${VERSION_NUMBER}"
+    ${PIP} install -r ./requirements.txt
+
     PYTHONVER="$(basename $(dirname $PYBIN))"
     BUILDDIR="$CURRDIR/gtsam_$PYTHONVER/gtsam_build"
     mkdir -p $BUILDDIR
     cd $BUILDDIR
-    export PATH=$PYBIN:$PYBIN:/usr/local/bin:$ORIGPATH
-    "${PYBIN}/pip3" install delocate
+    export PATH=$PYBIN:$PYBIN:$(brew --prefix)/bin:$ORIGPATH
+    ${PIP} install delocate
 
-    PYTHON_EXECUTABLE=${PYBIN}/python3
+    PYTHON_EXECUTABLE=${PYBIN}/python${VERSION_NUMBER}
     #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
     # echo ""
@@ -88,7 +90,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
         -DGTSAM_PYTHON_VERSION=$VERSION_NUMBER \
         -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
-        -DGTSAM_ALLOW_DEPRECATED_SINCE_V41=OFF \
+        -DGTSAM_ALLOW_DEPRECATED_SINCE_V42=OFF \
         -DCMAKE_INSTALL_PREFIX="$BUILDDIR/../gtsam_install" \
         -DBoost_USE_STATIC_LIBS=ON \
         -DBoost_USE_STATIC_RUNTIME=ON \
@@ -114,8 +116,8 @@ for PYVER in ${PYTHON_VERS[@]}; do
     
     # "${PYBIN}/pip" wheel . -w "/io/wheelhouse/"
     cd python
-    
-    "${PYBIN}/python3" setup.py bdist_wheel
+
+    ${PYTHON_EXECUTABLE} setup.py bdist_wheel
     cp ./dist/*.whl $CURRDIR/wheelhouse_unrepaired
 done
 

@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: ["cp36-cp36m", "cp37-cp37m", "cp38-cp38", "cp39-cp39"]
+        pyversion: ["cp36-cp36m", "cp37-cp37m", "cp38-cp38", "cp39-cp39", "cp310-cp310"]
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -29,5 +29,5 @@ jobs:
     - name: Archive wheels
       uses: actions/upload-artifact@v1
       with:
-        name: gtsam-4.2a6-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
-        path: wheelhouse/gtsam-4.2a6-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        name: gtsam-4.2a7-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        path: wheelhouse/gtsam-4.2a7-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
