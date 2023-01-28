@@ -27,7 +27,7 @@ brew update
 brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2.0"
+GTSAM_BRANCH="release/4.2"
 GTSAM_LIB_VERSION="4.2.0"
 GTSAM_PYTHON_VERSION="4.2.0"
 
