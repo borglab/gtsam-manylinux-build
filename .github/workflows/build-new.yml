@@ -29,5 +29,5 @@ jobs:
     - name: Archive wheels
       uses: actions/upload-artifact@v1
       with:
-        name: gtsam-4.2.0-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
-        path: wheelhouse/gtsam-4.2.0-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        name: gtsam-4.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        path: wheelhouse/gtsam-4.2-${{ matrix.pyversion }}-manylinux2014_x86_64.whl

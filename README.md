@@ -23,7 +23,7 @@ Please consult `build-macos.h`.
 
 2023-01-28
 
-We are building for the 4.2.0 release.
+We are building for the 4.2 release.
 
 ## Wheel Update Instructions
 
