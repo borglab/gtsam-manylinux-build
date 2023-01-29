@@ -27,9 +27,9 @@ brew update
 brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2a8"
+GTSAM_BRANCH="release/4.2a9"
 GTSAM_LIB_VERSION="4.2.0"
-GTSAM_PYTHON_VERSION="4.2a8"
+GTSAM_PYTHON_VERSION="4.2a9"
 
 # Build Boost staticly
 mkdir -p boost_build
