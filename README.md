@@ -21,7 +21,7 @@ Please consult `build-macos.h`.
 
 # Current Build Date
 
-2023-01-28
+2023-09-02
 
 We are building for the 4.2 release.
 
