@@ -1,6 +1,7 @@
 # GTSAM Python Wheel Builder
 
-![CI](https://github.com/ProfFan/gtsam-manylinux-build/workflows/CI/badge.svg) ![Pybind11 CI](https://github.com/borglab/gtsam-manylinux-build/workflows/Pybind11%20CI/badge.svg)
+![Linux Wheels](https://github.com/borglab/gtsam-manylinux-build/actions/workflows/build-new.yml/badge.svg)
+![Mac Wheels](https://github.com/borglab/gtsam-manylinux-build/actions/workflows/build-mac.yml/badge.svg)
 
 ## How to Build on Linux
 
