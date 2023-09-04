@@ -27,7 +27,7 @@ brew update
 brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_BRANCH="release/4.2"
+GTSAM_RELEASE_TAG="4.2.0"
 GTSAM_LIB_VERSION="4.2"
 GTSAM_PYTHON_VERSION="4.2"
 
@@ -44,7 +44,7 @@ cd $CURRDIR
 mkdir -p $CURRDIR/wheelhouse_unrepaired
 mkdir -p $CURRDIR/wheelhouse
 
-git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH
+git clone https://github.com/borglab/gtsam.git --depth 1 -b $GTSAM_RELEASE_TAG
 
 cd $CURRDIR/gtsam
 
