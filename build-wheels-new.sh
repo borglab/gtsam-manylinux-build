@@ -6,7 +6,7 @@ git clone https://github.com/borglab/gtsam.git --depth 1 -b $GTSAM_RELEASE_TAG /
 
 # Set the build directory
 BUILDDIR="/io/gtsam_build"
-mkdir -p $BUILDDIR
+mkdir $BUILDDIR
 cd $BUILDDIR
 
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
