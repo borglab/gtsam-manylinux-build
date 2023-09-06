@@ -1,10 +1,8 @@
 #!/bin/bash
 
-CURRDIR=$(pwd)
-
 # Clone GTSAM
-GTSAM_BRANCH="release/4.2a9"
-git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
+GTSAM_RELEASE_TAG="4.2.0"
+git clone https://github.com/borglab/gtsam.git --depth 1 -b $GTSAM_RELEASE_TAG /gtsam
 
 # Set the build directory
 BUILDDIR="/io/gtsam_build"
@@ -49,8 +47,7 @@ cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
     -DGTSAM_WITH_TBB=OFF \
     -DGTSAM_BUILD_PYTHON=ON \
     -DGTSAM_PYTHON_VERSION=$PYVER_NUM;
-    # -DPYTHON_LIBRARY=$PYTHON_LIBRARY \
-    # -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR;
+
 ec=$?
 
 if [ $ec -ne 0 ]; then

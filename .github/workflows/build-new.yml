@@ -1,4 +1,4 @@
-name: Ubuntu CI
+name: Linux Wheels
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: ["cp36-cp36m", "cp37-cp37m", "cp38-cp38", "cp39-cp39", "cp310-cp310"]
+        pyversion: ["cp38-cp38", "cp39-cp39", "cp310-cp310", "cp311-cp311"]
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -27,7 +27,8 @@ jobs:
         sudo chown -R $(whoami):$(whoami) .
 
     - name: Archive wheels
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
-        name: gtsam-4.2a9-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        name: gtsam-4.2.0-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        #TODO(Varun) update this once gtsam PR 1624 is merged
         path: wheelhouse/gtsam-4.2a9-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
