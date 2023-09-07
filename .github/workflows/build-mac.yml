@@ -34,7 +34,9 @@ jobs:
       uses: actions/checkout@master
 
     - name: Install Boost
-      run: ./install_boost.sh
+      run: |
+        chmod +x ./install_boost.sh
+        ./install_boost.sh
 
     - name: Build the macOS wheels
       run: |
