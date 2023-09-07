@@ -28,15 +28,6 @@ CURRDIR=$(pwd)
 GTSAM_LIB_VERSION="4.2"
 GTSAM_PYTHON_VERSION="4.2"
 
-# Build Boost staticly
-mkdir -p boost_build
-cd boost_build
-retry 3 wget https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.gz
-tar xzf boost_1_73_0.tar.gz
-cd boost_1_73_0
-./bootstrap.sh --prefix=$CURRDIR/boost_install --with-libraries=serialization,filesystem,thread,system,atomic,date_time,timer,chrono,program_options,regex clang-darwin
-./b2 -j$(sysctl -n hw.logicalcpu) cxxflags="-fPIC" runtime-link=static variant=release link=static install
-
 cd $CURRDIR
 mkdir -p $CURRDIR/wheelhouse_unrepaired
 mkdir -p $CURRDIR/wheelhouse
