@@ -7,10 +7,10 @@
 
 Run:
 ```bash
-sudo docker run --rm -e PLAT=manylinux2014_x86_64 -v `pwd`:/io quay.io/pypa/manylinux2014_x86_64 /io/build-wheels.sh
+sudo docker run --rm -e PLAT=manylinux2014_x86_64 PLAT=manylinux2014_x86_64 -e PYTHON_VERSION=$PYTHON_VERSION -v `pwd`:/io varunagrawal/gtsam-manylinux:latest /io/build-wheels.sh
 ```
 
-You will need to rename the built files to a valid name:
+You will need to rename the built files to a valid name. E.g.:
 
 ```bash
 mv gtsam-4.1.0-cp36-cp36m-manylinux2014_x86_64.none-manylinux2014_x86_64.whl gtsam-4.1.0-cp36-none-any.whl
@@ -18,7 +18,7 @@ mv gtsam-4.1.0-cp36-cp36m-manylinux2014_x86_64.none-manylinux2014_x86_64.whl gts
 
 ## How to Build on macOS
 
-Please consult `build-macos.h`.
+Please consult `build-macos-wheels.sh`.
 
 # Current Build Date
 
