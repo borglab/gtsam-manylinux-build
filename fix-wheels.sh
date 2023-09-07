@@ -32,9 +32,6 @@ cd $CURRDIR
 
 mkdir -p /io/wheelhouse
 
-# TODO: Build BOOST
-# https://thomastrapp.com/blog/building-a-pypi-package-for-a-modern-cpp-project/
-
 # Bundle external shared libraries into the wheels
 for whl in /io/wheelhouse/*.whl; do
     auditwheel repair "$whl" --plat $PLAT -w /io/wheelhouse/

@@ -67,6 +67,9 @@ cd python
 
 cp ./dist/*.whl /io/wheelhouse/
 
+#TODO(Varun) remove once GTSAM_VERSION_STRING is fixedin v4.2.1
+rename 4.2a9 4.2.0 /io/wheelhouse/*.whl
+
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/

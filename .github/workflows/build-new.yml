@@ -30,5 +30,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: gtsam-4.2.0-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
-        #TODO(Varun) update this once gtsam PR 1624 is merged
-        path: wheelhouse/gtsam-4.2a9-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        path: wheelhouse/gtsam-4.2.0-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
