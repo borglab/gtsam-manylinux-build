@@ -22,12 +22,9 @@ function retry {
 }
 
 brew update
-# brew uninstall bazel
-# brew upgrade
 brew install wget "$1" cmake || true
 
 CURRDIR=$(pwd)
-GTSAM_RELEASE_TAG="4.2.0"
 GTSAM_LIB_VERSION="4.2"
 GTSAM_PYTHON_VERSION="4.2"
 
@@ -77,7 +74,6 @@ for PYVER in ${PYTHON_VERS[@]}; do
     ${PIP} install delocate
 
     PYTHON_EXECUTABLE=${PYBIN}/python${VERSION_NUMBER}
-    #PYTHON_INCLUDE_DIR=$( find -L ${PYBIN}/../include/ -name Python.h -exec dirname {} \; )
 
     # echo ""
     # echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
@@ -99,10 +95,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
         -DBoost_NO_SYSTEM_PATHS=OFF \
         -DBUILD_STATIC_METIS=ON \
         -DGTSAM_BUILD_PYTHON=ON \
-        -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
-        # -DGTSAM_USE_CUSTOM_PYTHON_LIBRARY=ON \
-        # -DPYTHON_INCLUDE_DIRS:PATH=${PYTHON_INCLUDE_DIR} \
-        # -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+        -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE};
     ec=$?
 
     if [ $ec -ne 0 ]; then
@@ -152,9 +145,3 @@ for whln in $CURRDIR/wheelhouse/*.whl; do
     cd $CURRDIR/wheelhouse
     rm -rf $whl
 done
-
-# Install packages and test
-# for PYBIN in /opt/python/*/bin/; do
-#     "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
-#     (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
-# done

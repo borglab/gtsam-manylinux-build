@@ -10,6 +10,10 @@ on:
   repository_dispatch:
     types: [pybind-wrapper]
 
+env:
+  # The release tag to pull for building the wheels
+  GTSAM_RELEASE_TAG: 4.2.0
+
 jobs:
   mac-build:
     name: Wrapper macOS Build
