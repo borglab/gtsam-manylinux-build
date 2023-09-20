@@ -18,7 +18,7 @@ concurrency:
 
 env:
   # The release tag to pull for building the wheels
-  GTSAM_RELEASE_TAG: 4.2.0
+  GTSAM_RELEASE_TAG: python-updates
   BOOST_VERSION: 1.73.0
 
 jobs:
