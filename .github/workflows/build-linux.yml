@@ -1,4 +1,4 @@
-name: Mac Wheels
+name: Linux Wheels
 
 on:
   push:
@@ -19,31 +19,30 @@ concurrency:
 env:
   # The release tag to pull for building the wheels
   GTSAM_RELEASE_TAG: 4.2.0
-  BOOST_VERSION: 1.73.0
 
 jobs:
-  mac-build:
-    name: Wrapper macOS Build
-    runs-on: ${{ matrix.os }}
+  linux-build:
+    name: Wrapper Linux Build
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: ["macos-12", "macos-11"]
-        pyversion: ["python@3.8", "python@3.9", "python@3.10", "python@3.11"]
+        pyversion: ["cp38-cp38", "cp39-cp39", "cp310-cp310", "cp311-cp311"]
+
     steps:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Install Boost
+    - name: Build the Linux wheels
       run: |
-        chmod +x ./install_boost.sh
-        ./install_boost.sh
-
-    - name: Build the macOS wheels
-      run: |
-        ./build-macos-wheels.sh ${{ matrix.pyversion }}
+        sudo docker run --rm -e PLAT=manylinux2014_x86_64 \
+        -e PYTHON_VERSION=${{ matrix.pyversion }} \
+        -e GTSAM_RELEASE_TAG=$GTSAM_RELEASE_TAG \
+        -v `pwd`:/io varunagrawal/gtsam-manylinux:latest /io/build-linux-wheels.sh
+        # cleanup for custom runner
+        sudo chown -R $(whoami):$(whoami) .
 
     - name: Archive wheels
       uses: actions/upload-artifact@v3
       with:
-        name: wheels-macos-${{ matrix.pyversion }}-${{ matrix.os }}
-        path: ./wheelhouse
+        name: gtsam-$GTSAM_RELEASE_TAG-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
+        path: wheelhouse/gtsam-$GTSAM_RELEASE_TAG-${{ matrix.pyversion }}-manylinux2014_x86_64.whl
