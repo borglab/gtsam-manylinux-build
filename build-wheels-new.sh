@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CURRDIR=$(pwd)
-
 # Clone GTSAM
 GTSAM_BRANCH="release/4.2"
 echo "Cloning GTSAM with branch $GTSAM_BRANCH"
@@ -50,8 +48,7 @@ cmake /gtsam -DCMAKE_BUILD_TYPE=Release \
     -DGTSAM_WITH_TBB=OFF \
     -DGTSAM_BUILD_PYTHON=ON \
     -DGTSAM_PYTHON_VERSION=$PYVER_NUM;
-    # -DPYTHON_LIBRARY=$PYTHON_LIBRARY \
-    # -DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR;
+
 ec=$?
 
 if [ $ec -ne 0 ]; then
