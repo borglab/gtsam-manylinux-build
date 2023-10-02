@@ -4,6 +4,7 @@ CURRDIR=$(pwd)
 
 # Clone GTSAM
 GTSAM_BRANCH="release/4.2"
+echo "Cloning GTSAM with branch $GTSAM_BRANCH"
 git clone https://github.com/borglab/gtsam.git -b $GTSAM_BRANCH /gtsam
 
 # Set the build directory
