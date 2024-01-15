@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Clone GTSAM
-GTSAM_RELEASE_TAG="4.2.0"
 git clone https://github.com/borglab/gtsam.git --depth 1 -b $GTSAM_RELEASE_TAG /gtsam
 
 # Set the build directory
